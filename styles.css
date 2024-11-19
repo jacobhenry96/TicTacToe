@@ -18,3 +18,8 @@ img {
     width: 65px;
     height: 65px;
 }
+.buttonDiv {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}

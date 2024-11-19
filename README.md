@@ -1,0 +1,1 @@
+Made this project with no tutorial and it took me several days to firgure out the javscript behind this as it was kind of advanced. Overall a good learning experience that taught me new concepts.
