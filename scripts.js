@@ -8,6 +8,8 @@ box7 = document.querySelector(".box7");
 box8 = document.querySelector(".box8");
 box9 = document.querySelector(".box9");
 restartButton = document.querySelector(".restartButton");
+gameText = document.querySelector(".gameText");
+gameOver = false;
 currentTurn = 0
 boxStatus = {
     "box1": "",
@@ -24,45 +26,56 @@ boxStatus = {
 
 //Functions
 let checkTurn = (currentBox, boxNum) => {
-    if (boxStatus[boxNum] === "") {
-        if (currentTurn % 2 === 0) {
-            boxStatus[boxNum] = "x";
-            currentBox.innerHTML = "<img src='images/redx.png' alt=''>"
+    if (gameOver === false) {
+        if (boxStatus[boxNum] === "") {
+            if (currentTurn % 2 === 0) {
+                boxStatus[boxNum] = "x";
+                currentBox.innerHTML = "<img src='images/redx.png' alt=''>"
+            } else {
+                boxStatus[boxNum] = "o";
+                currentBox.innerHTML = "<img src='images/blueo.png' alt=''>"
+            }
         } else {
-            boxStatus[boxNum] = "o";
-            currentBox.innerHTML = "<img src='images/blueo.png' alt=''>"
+            alert('Pick a different box.');
         }
-    } else {
-        alert('Pick a different box.');
+        currentTurn++;
     }
-    currentTurn++;
 }
 
 function checkWin(boxStatus, boxNum) {
-    const winningCombinations = [
-        ["box1", "box2", "box3"],
-        ["box4", "box5", "box6"],
-        ["box7", "box8", "box9"],
-        ["box1", "box4", "box7"],
-        ["box2", "box5", "box8"],
-        ["box3", "box6", "box9"],
-        ["box1", "box5", "box9"],
-        ["box3", "box5", "box7"]
-    ]
-    winningCombinations.forEach(function(combination) {
-        console.log(boxStatus[combination[0]], boxStatus[combination[1]], boxStatus[combination[2]])
-        if (boxStatus[combination[0]] !== "") {
-            if (boxStatus[combination[0]] == boxStatus[combination[1]] &&  boxStatus[combination[1]] == boxStatus[combination[2]]) {
-                restartButton.style.display = "block";
-                if (boxStatus[combination[0]] = "x") {
-                    alert('You win!');
-                } else {
-                    
-                }
+    if (gameOver === false) {
+         const winningCombinations = [
+            ["box1", "box2", "box3"],
+            ["box4", "box5", "box6"],
+            ["box7", "box8", "box9"],
+            ["box1", "box4", "box7"],
+            ["box2", "box5", "box8"],
+            ["box3", "box6", "box9"],
+            ["box1", "box5", "box9"],
+            ["box3", "box5", "box7"]
+        ]
+        winningCombinations.forEach(function(combination) {
+            console.log(boxStatus[combination[0]], boxStatus[combination[1]], boxStatus[combination[2]])
+            if (boxStatus[combination[0]] !== "") {
+                if (boxStatus[combination[0]] == boxStatus[combination[1]] &&  boxStatus[combination[1]] == boxStatus[combination[2]]) {
+                    restartButton.style.display = "block";
+                    if (boxStatus[combination[0]] = "x") {
+                        if (boxStatus[boxNum] === "x") {
+                            alert('X wins!');
+                            gameText.innerHTML = "X Wins!";
+                        } else {
+                            alert('O wins!')
+                            gameText.innerHTML = "O Wins!";
+                        }
+                        gameOver = true;
+                    } else {
+                        alert('nothing');
+                    }
 
+                }
             }
-        }
-    })
+        })
+    }
 }
 
 box1.addEventListener('click', () => {
@@ -120,4 +133,5 @@ restartButton.addEventListener('click', () => {
     box7.innerHTML = "";
     box8.innerHTML = "";
     box9.innerHTML = "";
+    gameOver = false;
 });
